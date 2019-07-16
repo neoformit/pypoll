@@ -62,14 +62,6 @@ body {
   padding: 10px;
   align-items: center;
 }
-.lead {
-  font-family: Dosis, serif;
-  font-size: 16pt;
-  font-weight: 100;
-}
-.muted {
-  color: #666;
-}
 .text-center {
   text-align: center;
 }
@@ -81,6 +73,7 @@ h1 {
 label {
   font-family: inherit;
   font-size: inherit;
+  font-size: 18pt;
 }
 input {
   font-family: inherit;
@@ -148,12 +141,12 @@ button:hover {
   color: inherit;
   border-bottom: #fff 1px;
   font-family: Belgrano, serif;
-  line-height: 6pt;
+  padding-bottom: 10px;
 }
 .container.post p {
   color: white;
   border-bottom: #fff 2px;
-  font-size: 14pt;
+  font-size: 16pt;
   font-family: "antic didone", serif;
 }
 .post.odd {

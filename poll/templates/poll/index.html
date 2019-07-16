@@ -1,24 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <title> Title </title>
   <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="">
+
   <link href='https://fonts.googleapis.com/css?family=Antic Didone' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Belgrano' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
-  <title> Title </title>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-  <link rel="stylesheet" href="post.css" type="text/css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'poll/css/post.css' %}" type="text/css">
 </head>
 
 <body class="body">
 
 <div class="content-center text-center vpad-2">
   <h1> What can you get from Python? </h1>
-  <img id='python-logo' src="python.png" alt="python-logo" width=150>
+  <img id='python-logo' src="{% static 'poll/img/python.png' %}" alt="python-logo" width=150>
 </div>
 
 <div class="head">
@@ -28,56 +31,52 @@
     It also has an overwhelming amount of online resources, modules and
     packages which are easy to install and use at a moment's notice.
     <br><br>
-    Cool beans! How do I start?!
+    <b>Cool beans! How do I start?!</b>
     <br><br>
     Well that depends on the problems you need to solve! Data manipulation,
     data visualization, reading/writing/editing files, pipelining for
     bioinformatics, plug-ins for GIS? Maybe you just want to install and run
     python packages, but aren't sure how to go about it?
     <br><br>
-    Post a comment below with your data problems, and I'll see what I can do to
-    help! And if you're interested in what others are saying, just bookmark
-    this page and check back later.
+    Post a comment below with your data problems, and I'll have a think how best
+    to help. And if you're interested in what others are saying, just bookmark
+    this page and check back later - your posts will appear beneath...
     <br><br>
     Cam
   </p>
 </div>
 
 <div class="container-fluid post">
-  <form action="index.html" method="post">
+  <form action="/" method="post">
+    {% csrf_token %}
     <div class="input-group">
       <label for="name"> Name </label>
-      <input type="text" id='name' rows=25>
+      <input type="text" id='name' name='name' rows=25 value="{% if form.name.value %} {{ form.name.value }} {% endif %}">
       <br>
       <label for="name"> Comment </label>
-      <textarea type="text" id='comment' rows=6 cols=60></textarea>
+      <textarea type="text" id='comment' name='comment' rows=6 cols=60>{% if form.comment.value %}{{ form.comment.value }}{% endif %}</textarea>
       <br>
-      <button type="button" onclick="post();"> Post </button>
+      <button type="submit"> Post </button>
     </div>
   </form>
 
-  <div class="container post odd">
-    <h2> Cameron </h2>
-    <p>
-      I started out nearly three years ago with basic text file manipulation,
-      which saved me heaps of time and allowed me to do things with my data that
-      would have taken years by hand! I was formatting, writing and extracting
-      fasta files within a few weeks. Nowadays I often use pandas (the Python
-      data analysis library, how cute) to analyse and build spreadsheet data,
-      I'm pipelining bioinformatics software with Python on a linux server
-      and even building a full-stack web application with a Python backend.
-    </p>
+  {% for poll in polls %}
+  <div class="container post">
+    <h2> {{ poll.name }} </h2>
+    <p> {{ poll.comment }} </p>
   </div>
-  <div class="container post even">
-    <h2> My name </h2>
-    <p> Some stuff... </p>
-  </div>
+  {% endfor %}
 </div>
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-<!-- <script src="bootstrap.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="{% static 'poll/js/post.js' %} "></script>
+<script type="text/javascript">
+  $('document').ready(function() {
+    updateThemes();
+  });
+</script>
 </body>
 
 </html>
